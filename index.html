@@ -218,44 +218,129 @@
 <div id="product-tabs"></div>
 <div id="products"></div>
 <script>
+<script>
 async function loadProducts() {
-  const response = await fetch('products.json');
-  const data = await response.json();
+  try {
+    const res = await fetch('products.json');
+    const data = await res.json();
 
-  const categories = Object.keys(data);
-  const tabs = document.getElementById('product-tabs');
-  const products = document.getElementById('products');
+    const categories = Object.keys(data);
+    const tabs = document.getElementById('product-tabs');
 
-  categories.forEach(category => {
-    const button = document.createElement('button');
-    button.textContent = category.toUpperCase();
-    button.onclick = () => showProducts(category, data[category]);
-    tabs.appendChild(button);
-  });
+    // make the row of tab buttons
+    categories.forEach(category => {
+      const btn = document.createElement('button');
+      btn.textContent = category.toUpperCase().replace('_', ' ');
+      btn.onclick = () => showProducts(category, data[category]);
+      tabs.appendChild(btn);
+    });
 
-  showProducts(categories[0], data[categories[0]]);
+    // show first category by default
+    if (categories.length > 0) {
+      showProducts(categories[0], data[categories[0]]);
+    }
+  } catch (err) {
+    console.error('Error loading products:', err);
+  }
 }
 
-function showProducts(category, items) {
-  const products = document.getElementById('products');
-  products.innerHTML = `<h2>${category.toUpperCase()}</h2>`;
-  if (items.length === 0) {
-    products.innerHTML += '<p>No products yet.</p>';
+function showProducts(categoryName, items) {
+  const productsEl = document.getElementById('products');
+  productsEl.innerHTML = '';
+
+  // category title
+  const title = document.createElement('h2');
+  title.textContent = categoryName.toUpperCase().replace('_', ' ');
+  title.style.color = 'white';
+  title.style.fontFamily = 'sans-serif';
+  productsEl.appendChild(title);
+
+  if (!items || items.length === 0) {
+    const empty = document.createElement('p');
+    empty.textContent = 'No products yet.';
+    empty.style.color = 'white';
+    productsEl.appendChild(empty);
     return;
   }
-  items.forEach(item => {
-    products.innerHTML += `
-      <div class="product">
-        <img src="${item.image}" alt="${item.name}">
-        <h3>${item.name}</h3>
-        <p>$${item.price}</p>
-        <a href="${item.link}" target="_blank">Buy Now</a>
-      </div>
-    `;
+
+  // build each product card
+  items.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.style.border = '1px solid #444';
+    card.style.borderRadius = '10px';
+    card.style.padding = '20px';
+    card.style.margin = '20px auto';
+    card.style.maxWidth = '320px';
+    card.style.textAlign = 'center';
+    card.style.color = 'white';
+    card.style.fontFamily = 'sans-serif';
+    card.style.backgroundColor = '#00000088';
+
+    // title
+    const nameEl = document.createElement('h3');
+    nameEl.textContent = p.name || 'Unnamed Product';
+    nameEl.style.marginBottom = '10px';
+    nameEl.style.fontSize = '20px';
+    nameEl.style.lineHeight = '1.2';
+    productsEl.appendChild(card);
+    card.appendChild(nameEl);
+
+    // image (optional)
+    if (p.image) {
+      const imgEl = document.createElement('img');
+      imgEl.src = p.image;
+      imgEl.alt = p.name || '';
+      imgEl.style.width = '100%';
+      imgEl.style.borderRadius = '8px';
+      imgEl.style.border = '1px solid #555';
+      imgEl.style.marginBottom = '15px';
+      card.appendChild(imgEl);
+    }
+
+    // video (optional)
+    if (p.video) {
+      const videoWrapper = document.createElement('div');
+      videoWrapper.style.marginBottom = '15px';
+
+      videoWrapper.innerHTML = `
+        <video autoplay muted loop playsinline style="width:100%;border-radius:8px;border:1px solid #555;">
+          <source src="${p.video}" type="video/mp4">
+        </video>
+      `;
+      card.appendChild(videoWrapper);
+    }
+
+    // price
+    const priceEl = document.createElement('p');
+    priceEl.textContent = `$${p.price}`;
+    priceEl.style.fontSize = '18px';
+    priceEl.style.marginBottom = '12px';
+    card.appendChild(priceEl);
+
+    // buy link
+    if (p.link) {
+      const buyEl = document.createElement('a');
+      buyEl.href = p.link;
+      buyEl.target = '_blank';
+      buyEl.textContent = 'Buy Now';
+      buyEl.style.display = 'inline-block';
+      buyEl.style.backgroundColor = '#ff6600';
+      buyEl.style.color = '#000';
+      buyEl.style.fontWeight = '600';
+      buyEl.style.padding = '10px 16px';
+      buyEl.style.borderRadius = '6px';
+      buyEl.style.textDecoration = 'none';
+      buyEl.style.fontSize = '16px';
+      buyEl.style.fontFamily = 'sans-serif';
+      buyEl.style.boxShadow = '0 4px 20px rgba(255,102,0,0.4)';
+      card.appendChild(buyEl);
+    }
   });
 }
 
 loadProducts();
+</script>
 </script>
 
 </body>
