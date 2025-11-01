@@ -6,14 +6,8 @@
       "price": 60,
       "sizes": ["one-size"],
       "link": "https://buy.stripe.com/7sY14p0kv2Cm87V84G5Rm00",
-    <a href="product1.html" class="thumbnail">
-  <img src="https://i.imgur.com/FUwOdOg.jpeg" alt="Blue Beanie with White Glitter $60">
-  <span>888 Blue Beanie — 1/1 Drop</span>
-</a>
-
-<div style="text-align:center; padding:1rem;">
-  <video src="https://i.imgur.com/Kg0HEPf.mp4" autoplay muted loop playsinline style="width:100%; max-width:400px; border-radius:8px;"></video>
-</div>
+      "image": "https://i.imgur.com/FUwOdOg.jpeg",
+      "video": "https://i.imgur.com/Kg0HEPf.mp4"
     }
   ],
   "hoodies": [],
