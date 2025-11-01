@@ -6,7 +6,10 @@
       "price": 60,
       "sizes": ["one-size"],
       "link": "https://buy.stripe.com/7sY14p0kv2Cm87V84G5Rm00",
-        <video src=" "https://i.imgur.com/Kg0HEPf.mp4" controls playsinline style="width:100%; max-width:400px; border-radius:8px;"></video>"
+        <video autoplay muted loop playsinline style="width:100%; max-width:400px; border-radius:8px;">
+  <source src=https://i.imgur.com/Kg0HEPf.mp4 type="video/mp4">
+</video>
+</a>
     }
   ],
   "hoodies": [],
