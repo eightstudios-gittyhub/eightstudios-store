@@ -1,5 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+#product-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px;
+}
+#product-tabs button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#product-tabs button:hover {
+  background: #ff5500;
+}
+.product {
+  margin: 20px;
+  text-align: center;
+}
+.product img {
+  width: 150px;
+  border-radius: 10px;
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -187,6 +215,48 @@
     <a href="https://t.me/eightstudios_bot" target="_blank">-Telegram-PizzaBot888-</a>
   </p>
 
+<div id="product-tabs"></div>
+<div id="products"></div>
+<script>
+async function loadProducts() {
+  const response = await fetch('products.json');
+  const data = await response.json();
+
+  const categories = Object.keys(data);
+  const tabs = document.getElementById('product-tabs');
+  const products = document.getElementById('products');
+
+  categories.forEach(category => {
+    const button = document.createElement('button');
+    button.textContent = category.toUpperCase();
+    button.onclick = () => showProducts(category, data[category]);
+    tabs.appendChild(button);
+  });
+
+  showProducts(categories[0], data[categories[0]]);
+}
+
+function showProducts(category, items) {
+  const products = document.getElementById('products');
+  products.innerHTML = `<h2>${category.toUpperCase()}</h2>`;
+  if (items.length === 0) {
+    products.innerHTML += '<p>No products yet.</p>';
+    return;
+  }
+  items.forEach(item => {
+    products.innerHTML += `
+      <div class="product">
+        <img src="${item.image}" alt="${item.name}">
+        <h3>${item.name}</h3>
+        <p>$${item.price}</p>
+        <a href="${item.link}" target="_blank">Buy Now</a>
+      </div>
+    `;
+  });
+}
+
+loadProducts();
+</script>
 
 </body>
 </html>
