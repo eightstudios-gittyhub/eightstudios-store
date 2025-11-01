@@ -1,0 +1,18 @@
+{
+  "beanies": [
+    {
+      "id": "beanie888",
+      "name": "888 Blue Beanie",
+      "price": 60,
+      "sizes": ["one-size"],
+      "link": "https://buy.stripe.com/7sY14p0kv2Cm87V84G5Rm00",
+      "image": "https://yourimageurl.com/beanie.jpg"
+    }
+  ],
+  "hoodies": [],
+  "shirts": [],
+  "pants": [],
+  "shorts": [],
+  "phone_cases": [],
+  "hats": []
+}
